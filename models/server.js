@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { socketController } = require('../sockets/sontroller');
 
 class Server {
 
@@ -33,15 +34,7 @@ class Server {
         // this.app.use( this.paths.auth, require('../routes/auth'));   
     }
     sockets(){
-        this.io.on("connection", socket => {
-        
-            socket.on('disconnect', () => {
-                console.log('Cliente desconectado', socket.id);
-            })
-            socket.on('enviar-mensaje', (payload) => {
-                this.io.emit('enviar-mensaje' , payload);
-            });
-        }); 
+        this.io.on("connection", socketController); 
         
     }
 
